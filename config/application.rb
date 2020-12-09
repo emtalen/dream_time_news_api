@@ -29,5 +29,14 @@ module DreamTimeNewsApi
       generate.controller_specs false
       generate.request_specs false
     end
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins "*"
+        resource "*",
+          headers: :any,
+          methods: %i[get post put delete],
+          max_age: 0
+      end
+    end
   end
 end
