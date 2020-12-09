@@ -9,6 +9,8 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
+coverage/
+
 /storage/*
 !/storage/.keep
 .byebug_history
