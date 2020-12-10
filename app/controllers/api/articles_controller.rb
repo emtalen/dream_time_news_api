@@ -18,6 +18,8 @@ class Api::ArticlesController < ApplicationController
   end
 
   def is_user_journalist?
-    current_user.journalist?
+    unless current_user.journalist?
+      render json: { message: "You are not authorized to create an article." }, status: 401
+    end
   end
 end

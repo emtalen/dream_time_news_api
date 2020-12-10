@@ -7,7 +7,7 @@ RSpec.describe "POST /api/articles", type: :request do
   let(:journalist) { create(:user, role: "journalist") }
   let(:journalist_headers) { journalist.create_new_auth_token }
 
-  describe "journalist can create an article" do
+  describe "Journalist can create an article" do
     before do
       post "/api/articles",
         params: {
@@ -20,14 +20,37 @@ RSpec.describe "POST /api/articles", type: :request do
         },
         headers: journalist_headers
     end
-    it "is expected to return a success status" do
+    it "is expected to return 201 status" do
       expect(response).to have_http_status 201
     end
 
     it "is expected to return a success message" do
+      expect(response_json).to have_key("message").and have_value("Your article was successfully created!")
+    end
+  end
+
+  describe "Registered user can not create an article" do
+    before do
+      post "/api/articles",
+           params: {
+             article: {
+               title: "Test title",
+               sub_title: "Test subtitle",
+               author: "Test author",
+               content: "Test content!",
+             },
+           },
+           headers: registered_user_headers
+    end
+
+    it "is expected to return 401 status" do
+      expect(response).to have_http_status 401
+    end
+
+    it "is expected to return an error message" do
       expect(response_json)
       .to have_key("message")
-      .and have_value("Your article was successfully created!")
+      .and have_value("You are not authorized to create an article.")
     end
   end
 end
