@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  # before_action :authenticate_user!, only: [:create]
   before_action :is_user_journalist?, only: [:create]
 
   def create
