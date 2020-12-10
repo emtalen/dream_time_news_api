@@ -1,3 +1,4 @@
+Resolving dependencies...
 require_relative "boot"
 
 require "rails"
@@ -35,6 +36,7 @@ module DreamTimeNewsApi
         resource "*",
           headers: :any,
           methods: %i[get post put delete],
+          expose: %w(access-token expiry token-type uid client),
           max_age: 0
       end
     end
