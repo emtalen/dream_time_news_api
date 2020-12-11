@@ -3,7 +3,7 @@ class Api::ArticlesController < ApplicationController
   before_action :is_user_journalist?, only: [:create]
 
   def create
-    article = Article.create(article_params)
+    article = current_user.articles.create(article_params)
     if article.persisted?
       render json: { message: "Your article was successfully created!" }, status: 201
     else
@@ -14,7 +14,7 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :sub_title, :content, :author)
+    params.require(:article).permit(:title, :sub_title, :content)
   end
 
   def is_user_journalist?

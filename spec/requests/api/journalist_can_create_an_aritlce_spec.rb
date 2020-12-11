@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe "POST /api/articles", type: :request do
-  let(:visitor) { create(:user, role: "visitor") }
-  let(:visitor_headers) { { HTTP_ACCEPT: "application/json" } }
   let(:registered_user) { create(:user, role: "registered_user") }
   let(:registered_user_headers) { registered_user.create_new_auth_token }
   let(:journalist) { create(:user, role: "journalist") }
@@ -15,7 +13,7 @@ RSpec.describe "POST /api/articles", type: :request do
           article: {
             title: "Test title",
             sub_title: "Test subtitle",
-            author: "Test author",
+            author_id: "#{journalist.id}",
             content: "Test content!",
           },
         },
@@ -63,8 +61,7 @@ RSpec.describe "POST /api/articles", type: :request do
             author: "Test author",
             content: "Test content!",
           },
-        },
-        headers: visitor_headers
+        }
     end
 
     it "is expected to return 401 status" do

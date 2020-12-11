@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, if: :new_record?
 
-  enum role: [:visitor, :registered_user, :journalist]
+  enum role: [:registered_user, :journalist]
+
+  has_many :articles, foreign_key: 'author_id'
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -14,6 +16,6 @@ class User < ActiveRecord::Base
   private 
 
   def set_default_role
-    self.role ||= :visitor
+    self.role ||= :registered_user
   end
 end

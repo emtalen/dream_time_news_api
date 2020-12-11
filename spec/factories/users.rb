@@ -4,9 +4,6 @@ FactoryBot.define do
     name { "MyString" }
     password { "password" }
     password_confirmation { "password" }
-    factory :visitor do
-      role { :visitor }
-    end
     factory :registered_user do
       role { :registered_user }
     end
