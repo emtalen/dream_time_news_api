@@ -1,6 +1,8 @@
 RSpec.describe User, type: :model do
   it "is expected to have valid Factory" do
     expect(create(:user)).to be_valid
+    expect(create(:registered_user, email: "registered@example.com")).to be_valid
+    expect(create(:journalist, email: "journalist@example.com")).to be_valid
   end
   describe "Database table" do
     it { is_expected.to have_db_column :encrypted_password }
