@@ -1,17 +1,19 @@
-module DecodeService 
+# frozen_string_literal: true
+
+module DecodeService
   def self.attach_image(file, target)
     image = Rails.env.test? ? file : split_base64(file)
     decoded_data = Base64.decode64(image[:data])
     io = StringIO.new
     io.puts(decoded_data)
     io.rewind
-
+    
     target.attach(io: io, filename: "#{image[:encoder]}.#{image[:extension]}")
   end
 
-  private
+  private_methods
 
-  def split_base64(string)
+  def self.split_base64(string)
     if string =~ /^data:(.*?);(.*?),(.*)$/
       uri = {}
       uri[:type] = Regexp.last_match(1)

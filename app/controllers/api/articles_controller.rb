@@ -2,6 +2,11 @@ class Api::ArticlesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   before_action :is_user_journalist?, only: [:create]
 
+  def index
+    articles = Article.all
+    render json: articles, each_serializer: ArticlesSerializer
+  end
+
   def create
     article = current_user.articles.create(article_params)
     if article.persisted? && attach_image(article)
