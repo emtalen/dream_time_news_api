@@ -39,5 +39,9 @@ module DreamTimeNewsApi
           max_age: 0
       end
     end
+
+    config.stripe.publishable_key = Rails.application.credentials.stripe[:pk_key]
+    config.stripe.secret_key = Rails.application.credentials.stripe[:secret_key]
+
   end
 end
